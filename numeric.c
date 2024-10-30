@@ -6,7 +6,7 @@
 /*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:29:25 by dchernik          #+#    #+#             */
-/*   Updated: 2024/10/30 17:19:01 by dchernik         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:47:56 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include <stdio.h>
 
+/* Processes %u conversion */
 int	nbr_conv(char const *format, int spos, int epos)
 {
 	printf("\n\"");
@@ -26,6 +27,7 @@ int	nbr_conv(char const *format, int spos, int epos)
 	return (0);
 }
 
+/* Processes %d and %i conversions */
 int	u_nbr_conv(char const *format, int spos, int epos)
 {
 	printf("\n\"");
@@ -38,6 +40,7 @@ int	u_nbr_conv(char const *format, int spos, int epos)
 	return (0);
 }
 
+/* Processes %x and %X conversions */
 int	hex_conv(char const *format, int spos, int epos)
 {
 	printf("\n\"");
