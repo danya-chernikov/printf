@@ -6,7 +6,7 @@
 /*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:29:25 by dchernik          #+#    #+#             */
-/*   Updated: 2024/10/30 17:47:56 by dchernik         ###   ########.fr       */
+/*   Updated: 2024/10/30 18:51:00 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 
 /* Processes %u conversion */
-int	nbr_conv(char const *format, int spos, int epos)
+int	nbr_conv(char const *format, int spos, int epos, int args_cnt)
 {
 	printf("\n\"");
 	while (spos < epos)
@@ -28,7 +28,7 @@ int	nbr_conv(char const *format, int spos, int epos)
 }
 
 /* Processes %d and %i conversions */
-int	u_nbr_conv(char const *format, int spos, int epos)
+int	u_nbr_conv(char const *format, int spos, int epos, int args_cnt)
 {
 	printf("\n\"");
 	while (spos < epos)
@@ -41,7 +41,7 @@ int	u_nbr_conv(char const *format, int spos, int epos)
 }
 
 /* Processes %x and %X conversions */
-int	hex_conv(char const *format, int spos, int epos)
+int	hex_conv(char const *format, int spos, int epos, int args_cnt)
 {
 	printf("\n\"");
 	while (spos < epos)

@@ -6,7 +6,7 @@
 /*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:29:29 by dchernik          #+#    #+#             */
-/*   Updated: 2024/10/30 17:46:20 by dchernik         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:09:19 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <unistd.h>
 
 /* pbytes - number of bytes that ft_printf outputed
-   spos   - starting position of a found conversion
+   spos   - starting position of a found conversion field
    i      - index variable
    In a loop, we process all symbols in the format string.
    If we find two consecutive '%' symbols, we print one of them.
@@ -24,15 +24,16 @@
    we find a conversion symbol or reach the end of the string.
    When we find a conversion symbol corresponding to that '%', we call
    process_conv(), which will call the appropriate function to handle
-   the conversion. */
+   the conversion.
+   And finally when we find a regular symbol we just replicate it */
 int	ft_printf(char const *format, ...)
 {
-	static int	pbytes;
+	static int	pbytes = 0;
 	int			i;
 	int			spos;
+	va_list		args;
 
 	i = 0;
-	pbytes = 0;
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
@@ -43,7 +44,7 @@ int	ft_printf(char const *format, ...)
 			while (!is_conv(format[i]) && format[i] != '\0')
 				i++;
 			if (is_conv(format[i]))
-				process_conv(format, spos, i);
+				pbytes += process_conv(format, spos, i);
 		}
 		else
 			ft_putchar_fd(format[i], STDOUT);
@@ -66,22 +67,31 @@ int	next_sym_is_percent(char const *format, int *i)
 	return (0);
 }
 
+/* For each conversion calls the appropriate function to handle it.
+   spos     - starting position of a found conversion field
+   epos     - ending position
+   args_cnt - the counter of the arguments that were passed to ft_printf.
+			  we increment it each time we find next '%'
+   In the string "just a number %-10.4d" spos is equal to 15
+   and epos is equal to 19 */
 int	process_conv(char const *format, int spos, int epos)
 {
-	int	pbytes;
+	static int	args_cnt = 1;
+	int			pbytes;
 
+	args_cnt++;
 	if (format[epos] == 'c')
-		pbytes = char_conv(format, spos, epos);
+		pbytes = char_conv(format, spos, epos, args_cnt);
 	if (format[epos] == 's')
-		pbytes = string_conv(format, spos, epos);
+		pbytes = string_conv(format, spos, epos, args_cnt);
 	if (format[epos] == 'p')
-		pbytes = ptr_conv(format, spos, epos);
+		pbytes = ptr_conv(format, spos, epos, args_cnt);
 	if (format[epos] == 'd' || format[epos] == 'i')
-		pbytes = nbr_conv(format, spos, epos);
+		pbytes = nbr_conv(format, spos, epos, args_cnt);
 	if (format[epos] == 'u')
-		pbytes = u_nbr_conv(format, spos, epos);
+		pbytes = u_nbr_conv(format, spos, epos, args_cnt);
 	if (format[epos] == 'x' || format[epos] == 'X')
-		pbytes = hex_conv(format, spos, epos);
+		pbytes = hex_conv(format, spos, epos, args_cnt);
 	return (pbytes);
 }
 
