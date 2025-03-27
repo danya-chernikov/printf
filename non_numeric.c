@@ -6,44 +6,46 @@
 /*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:29:31 by dchernik          #+#    #+#             */
-/*   Updated: 2024/10/30 19:01:39 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/27 19:32:15 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
+#include "libft/libft.h"
+
 #include <stdio.h>
 
 /* Processes %c conversion
    args_cnt here is static variable declared in ft_printf.c ! */
-int	char_conv(char const *format, int spos, int epos, int args_cnt)
+int	char_conv(void *arg, int cpos)
 {
-	printf("\"\n");
-	return (0);
+	if (arg == NULL)
+		write(STDOUT, 0, (size_t)1); // check this!
+	else
+		write(STDOUT, (char *)arg, (size_t)1);
+	return (1);
 }
 
 /* Processes %s conversion */
-int	string_conv(char const *format, int spos, int epos, int args_cnt)
+int	string_conv(void *arg, int cpos)
 {
-	printf("\n\"");
-	while (spos < epos)
+	char	*str;
+	int		len;
+
+	if (arg == NULL)
 	{
-		printf("%c", format[spos]);
-		spos++;
+		ft_putstr_fd("(null)", STDOUT);
+		return (6);
 	}
-	printf("\"\n");
-	return (0);
+	str = (char *)arg;
+	len = ft_strlen(str);
+	ft_putstr_fd(str, STDOUT);
+	return (len);
 }
 
 /* Processes %p conversion */
-int	ptr_conv(char const *format, int spos, int epos, int args_cnt)
+int	ptr_conv(void *arg, int cpos)
 {
-	printf("\n\"");
-	while (spos < epos)
-	{
-		printf("%c", format[spos]);
-		spos++;
-	}
-	printf("\"\n");
-	return (0);
+
+	return (len);
 }
