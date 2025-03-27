@@ -6,7 +6,7 @@
 /*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:30:06 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/27 19:25:35 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/27 20:33:44 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ int		count_convs(char const *format);
 int		is_conv(char ch);
 
 /* non_numeric.c */
-int		char_conv(void *arg, int cpos);
-int		string_conv(void *arg, int cpos);
-int		ptr_conv(void *arg, int cpos);
+int		char_conv(void *arg);
+int		string_conv(void *arg);
+int		ptr_conv(void *arg);
 
 /* numeric.c */
-int		nbr_conv(void *arg, int cpos);
-int		u_nbr_conv(void *arg, int cpos);
-int		hex_conv_upper(void *arg, int cpos);
-int		hex_conv_lower(void *arg, int cpos);
+int		nbr_conv(void *arg);
+int		u_nbr_conv(void *arg);
+int		hex_conv_upper(void *arg);
+int		hex_conv_lower(void *arg);
 
 /* utils.c */
 char	*reverse_str(char *str);

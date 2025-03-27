@@ -1,28 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 15:29:29 by dchernik          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/27 03:48:11 by dchernik         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/27 17:30:50 by dchernik         ###   ########.fr       */
->>>>>>> efc4016 (Libft was added. A function providing)
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_printf.h"
-<<<<<<< HEAD
-#include "libft.h"
-=======
 #include "libft/libft.h"
->>>>>>> efc4016 (Libft was added. A function providing)
 
 #include <stdarg.h>
 #include <unistd.h>
+#include <stdio.h>
 
 /* In a loop, we process all symbols in
  * the format string. If we find two
@@ -40,11 +21,8 @@
  *
  *     pbytes - number of bytes that were
  *              output by printf;
-<<<<<<< HEAD
  *     spos   - starting position of a found
-=======
  *     cpos   - position of a found
->>>>>>> efc4016 (Libft was added. A function providing)
  *			    conversion field;
  *     i      - index variable. */
 int	ft_printf(char const *format, ...)
@@ -54,21 +32,17 @@ int	ft_printf(char const *format, ...)
 	int			cpos;
 	int			args_num;
 	void		*arg;
-	va_list		args;
+	va_list		vl;
 
 	i = 0;
 	args_num = count_convs(format);
 	printf("args_num = %d\n", args_num);
-	va_start(vl, args_num);
+	va_start(vl, format);
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
 		{
-<<<<<<< HEAD
-			spos = i + 1;
-=======
 			cpos = i + 1;
->>>>>>> efc4016 (Libft was added. A function providing)
 			/* It means a single percent
 			 * symbol is located at the
 			 * end of the format string */
@@ -84,9 +58,8 @@ int	ft_printf(char const *format, ...)
 				while (!is_conv(format[i]) && format[i] != '\0')
 					i++;
 				if (is_conv(format[i]))
-<<<<<<< HEAD
 					pbytes += process_conv(format, spos, i);
-=======
+				else
 				{
 					arg = va_arg(vl, void *);
 					pbytes += process_conv(format, arg, cpos);
@@ -94,7 +67,6 @@ int	ft_printf(char const *format, ...)
 				else
 				{
 				}
->>>>>>> efc4016 (Libft was added. A function providing)
 			}
 		}
 		else
@@ -135,26 +107,24 @@ int	next_sym_is_percent(char const *format, int *i)
  *
  * In the string "just a number %-10.4d" spos is equal
  * to 15 and epos is equal to 19. */
-<<<<<<< HEAD
-int	process_conv(char const *format, int spos, int epos)
-=======
 int	process_conv(char const *format, void *arg, int cpos)
->>>>>>> efc4016 (Libft was added. A function providing)
 {
 	int	pbytes;
 
-	if (format[epos] == 'c')
-		pbytes = char_conv(arg, cpos);
-	if (format[epos] == 's')
-		pbytes = string_conv(arg, cpos);
-	if (format[epos] == 'p')
-		pbytes = ptr_conv(arg, cpos);
-	if (format[epos] == 'd' || format[epos] == 'i')
-		pbytes = nbr_conv(arg, cpos);
-	if (format[epos] == 'u')
-		pbytes = u_nbr_conv(arg, cpos);
-	if (format[epos] == 'x' || format[epos] == 'X')
-		pbytes = hex_conv(arg, cpos);
+	if (format[cpos] == 'c')
+		pbytes = char_conv(arg);
+	if (format[cpos] == 's')
+		pbytes = string_conv(arg);
+	if (format[cpos] == 'p')
+		pbytes = ptr_conv(arg);
+	if (format[cpos] == 'd' || format[cpos] == 'i')
+		pbytes = nbr_conv(arg);
+	if (format[cpos] == 'u')
+		pbytes = u_nbr_conv(arg);
+	if (format[cpos] == 'x')
+		pbytes = hex_conv_lower(arg);
+	if (format[cpos] == 'X')
+		pbytes = hex_conv_upper(arg);
 	return (pbytes);
 }
 
@@ -162,11 +132,7 @@ int	process_conv(char const *format, void *arg, int cpos)
  * contain our array of pointers to
  * all conversions found in the
  * format string. */
-<<<<<<< HEAD
-int	convs_count(char const *format)
-=======
 int	count_convs(char const *format)
->>>>>>> efc4016 (Libft was added. A function providing)
 {
 	int	cnv_num;
 	int	i;
@@ -216,6 +182,4 @@ int	is_conv(char ch)
  * When single `%` is located in the middle of the format string (and there
  * is no `%` at the end), printf will try to find corresponding convertion
  * symbol for that `%`, if fails, it will output `%` as it it with all
- * subsequent symbols
- *
- * */
+ * subsequent symbols */

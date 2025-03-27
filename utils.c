@@ -3,14 +3,16 @@
 char	*reverse_str(char *str)
 {
 	size_t	i;
+	size_t	slen;
 	char	tmp;
 
 	i = 0;
-	while (i < (strlen(str) >> 1))
+	slen = ft_strlen(str);
+	while (i < len >> 1)
 	{
 	    tmp = str[i];
-		str[i] = str[strlen(str) - i - 1];
-		str[strlen(str) - i - 1] = tmp;
+		str[i] = str[len - i - 1];
+		str[len - i - 1] = tmp;
 		i++;
 	}
 	return (str);
@@ -25,7 +27,7 @@ char	*int_to_hex(unsigned int num, int dcase)
 
 	lower = "0123456789abcdef\0";
 	upper = "0123456789ABCDEF\0";
-	str = calloc(16, sizeof (char));
+	str = ft_calloc(16, sizeof (char));
 	if (str == NULL)
 		return (NULL);
 	if (num == 0)

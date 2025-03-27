@@ -6,7 +6,7 @@
 /*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:29:31 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/27 19:32:15 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/27 21:25:26 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 /* Processes %c conversion
    args_cnt here is static variable declared in ft_printf.c ! */
-int	char_conv(void *arg, int cpos)
+int	char_conv(void *arg)
 {
 	if (arg == NULL)
 		write(STDOUT, 0, (size_t)1); // check this!
@@ -27,7 +27,7 @@ int	char_conv(void *arg, int cpos)
 }
 
 /* Processes %s conversion */
-int	string_conv(void *arg, int cpos)
+int	string_conv(void *arg)
 {
 	char	*str;
 	int		len;
@@ -44,8 +44,19 @@ int	string_conv(void *arg, int cpos)
 }
 
 /* Processes %p conversion */
-int	ptr_conv(void *arg, int cpos)
+int	ptr_conv(void *arg)
 {
-
+	size_t	len;
+	char	*hexnum;
+	
+	if (arg == NULL)
+	{
+		ft_putstr_fd("(nil)", STDOUT);
+		return (5);
+	}
+	hexnum = int_to_hex(*(int *)arg, LOWERCASE);
+	write(STDOUT, "0x", (size_t)2);
+	ft_putstr_fd(hexnum, STDOUT);
+	free(hexnum);
 	return (len);
 }
