@@ -1,3 +1,4 @@
+#include "ft_printf.h"
 #include "libft/libft.h"
 
 char	*reverse_str(char *str)
@@ -8,11 +9,11 @@ char	*reverse_str(char *str)
 
 	i = 0;
 	slen = ft_strlen(str);
-	while (i < len >> 1)
+	while (i < slen >> 1)
 	{
 	    tmp = str[i];
-		str[i] = str[len - i - 1];
-		str[len - i - 1] = tmp;
+		str[i] = str[slen - i - 1];
+		str[slen - i - 1] = tmp;
 		i++;
 	}
 	return (str);

@@ -1,7 +1,6 @@
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-#include <stdarg.h>
 #include <unistd.h>
 #include <stdio.h>
 
@@ -30,13 +29,9 @@ int	ft_printf(char const *format, ...)
 	static int	pbytes = 0;
 	int			i;
 	int			cpos;
-	int			args_num;
-	void		*arg;
 	va_list		vl;
 
 	i = 0;
-	args_num = count_convs(format);
-	printf("args_num = %d\n", args_num);
 	va_start(vl, format);
 	while (format[i] != '\0')
 	{
@@ -58,11 +53,8 @@ int	ft_printf(char const *format, ...)
 				while (!is_conv(format[i]) && format[i] != '\0')
 					i++;
 				if (is_conv(format[i]))
-					pbytes += process_conv(format, spos, i);
-				else
 				{
-					arg = va_arg(vl, void *);
-					pbytes += process_conv(format, arg, cpos);
+					pbytes += process_conv(format, &vl, cpos);
 				}
 				else
 				{
@@ -107,24 +99,24 @@ int	next_sym_is_percent(char const *format, int *i)
  *
  * In the string "just a number %-10.4d" spos is equal
  * to 15 and epos is equal to 19. */
-int	process_conv(char const *format, void *arg, int cpos)
+int	process_conv(char const *format, va_list *vl, int cpos)
 {
 	int	pbytes;
 
 	if (format[cpos] == 'c')
-		pbytes = char_conv(arg);
+		pbytes = char_conv(vl);
 	if (format[cpos] == 's')
-		pbytes = string_conv(arg);
+		pbytes = string_conv(vl);
 	if (format[cpos] == 'p')
-		pbytes = ptr_conv(arg);
+		pbytes = ptr_conv(vl);
 	if (format[cpos] == 'd' || format[cpos] == 'i')
-		pbytes = nbr_conv(arg);
+		pbytes = nbr_conv(vl);
 	if (format[cpos] == 'u')
-		pbytes = u_nbr_conv(arg);
+		pbytes = u_nbr_conv(vl);
 	if (format[cpos] == 'x')
-		pbytes = hex_conv_lower(arg);
+		pbytes = hex_conv(vl, LOWERCASE);
 	if (format[cpos] == 'X')
-		pbytes = hex_conv_upper(arg);
+		pbytes = hex_conv(vl, UPPERCASE);
 	return (pbytes);
 }
 
@@ -137,12 +129,17 @@ int	count_convs(char const *format)
 	int	cnv_num;
 	int	i;
 
-	cnv_num = 0;
 	i = 0;
+	cnv_num = 0;
 	while (format[i] != '\0')
 	{
-		if (format[i] == '%' && format[i + 1] != '\0' && format[i + 1] != '%')
-			cnv_num++;
+		if (format[i] == '%' && format[i + 1] != '\0')
+		{
+			if (format[i + 1] == '%')
+				i++;
+			else
+				cnv_num++;
+		}
 		i++;
 	}
 	return (cnv_num);
