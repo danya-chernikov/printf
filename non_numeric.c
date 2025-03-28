@@ -6,7 +6,7 @@
 /*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:29:31 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 03:59:34 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 04:16:01 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ int	string_conv(va_list *vl)
 /* Processes %p conversion */
 int	ptr_conv(va_list *vl)
 {
-	char			*hexnum;
-	unsigned int	uint_arg;
-	int				len;
+	char				*hexnum;
+	unsigned long long	uint_arg;
+	int					len;
 	
-	uint_arg = va_arg(*vl, unsigned int);
+	uint_arg = va_arg(*vl, unsigned long long);
 	if (uint_arg == 0)
 	{
 		ft_putstr_fd("(nil)", STDOUT);

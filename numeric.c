@@ -6,7 +6,7 @@
 /*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:29:25 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 03:59:12 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 04:15:31 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ int	u_nbr_conv(va_list *vl)
 /* Processes %x and %X conversions */
 int	hex_conv(va_list *vl, int dcase)
 {
-	char			*hexnum_str;
-	unsigned int	hex_arg; 
-	int				len;
+	char				*hexnum_str;
+	unsigned long long	hex_arg; 
+	int					len;
 
-	hex_arg = va_arg(*vl, unsigned int);
+	hex_arg = va_arg(*vl, unsigned long long);
 	if (hex_arg == 0)
 	{
 		ft_putchar_fd('0', STDOUT);

@@ -6,7 +6,7 @@
 /*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:30:06 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 02:47:39 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 04:13:55 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ int		hex_conv(va_list *vl, int dcase);
 
 /* utils.c */
 char	*reverse_str(char *str);
-char	*int_to_hex(unsigned int num, int dcase);
+char	*int_to_hex(unsigned long long num, int dcase);
 
 #endif

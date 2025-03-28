@@ -19,7 +19,7 @@ char	*reverse_str(char *str)
 	return (str);
 }
 
-char	*int_to_hex(unsigned int num, int dcase)
+char	*int_to_hex(unsigned long long num, int dcase)
 {
 	char	*lower;
 	char	*upper;
@@ -28,7 +28,7 @@ char	*int_to_hex(unsigned int num, int dcase)
 
 	lower = "0123456789abcdef\0";
 	upper = "0123456789ABCDEF\0";
-	str = ft_calloc(16, sizeof (char));
+	str = ft_calloc(32, sizeof (char));
 	if (str == NULL)
 		return (NULL);
 	if (num == 0)
