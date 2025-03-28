@@ -6,7 +6,7 @@
 /*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:29:31 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 03:23:09 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 03:59:34 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@
    args_cnt here is static variable declared in ft_printf.c ! */
 int	char_conv(va_list *vl)
 {
-	char	*char_arg;
+	int		char_arg;
 	char	null;
-	size_t	len;
+	int		len;
 
 	len = 1;
 	null = '\0';
-	char_arg = va_arg(*vl, char *);
-	if (char_arg == NULL)
+	char_arg = va_arg(*vl, int);
+	if (char_arg == 0)
 		write(STDOUT, &null, len); // check this!
 	else
-		write(STDOUT, char_arg, len);
+		write(STDOUT, &char_arg, len);
 	return (len);
 }
 
@@ -38,7 +38,7 @@ int	char_conv(va_list *vl)
 int	string_conv(va_list *vl)
 {
 	char	*str_arg;
-	size_t	len;
+	int		len;
 
 	str_arg = va_arg(*vl, char *);
 	if (str_arg == NULL)
@@ -59,7 +59,7 @@ int	ptr_conv(va_list *vl)
 {
 	char			*hexnum;
 	unsigned int	uint_arg;
-	size_t			len;
+	int				len;
 	
 	uint_arg = va_arg(*vl, unsigned int);
 	if (uint_arg == 0)

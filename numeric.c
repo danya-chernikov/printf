@@ -6,7 +6,7 @@
 /*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:29:25 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 03:18:58 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 03:59:12 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	nbr_conv(va_list *vl)
 {
 	int		int_arg;
 	char	*num_str;
-	size_t	len;
+	int		len;
 
 	int_arg = va_arg(*vl, int);
 	if (int_arg == 0)
@@ -44,7 +44,7 @@ int	u_nbr_conv(va_list *vl)
 {
 	unsigned int	uint_arg;
 	char			*num_str;
-	size_t			len;
+	int				len;
 
 	uint_arg = va_arg(*vl, unsigned int);
 	if (uint_arg == 0)
@@ -67,7 +67,7 @@ int	hex_conv(va_list *vl, int dcase)
 {
 	char			*hexnum_str;
 	unsigned int	hex_arg; 
-	size_t			len;
+	int				len;
 
 	hex_arg = va_arg(*vl, unsigned int);
 	if (hex_arg == 0)

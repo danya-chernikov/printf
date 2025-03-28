@@ -26,39 +26,35 @@
  *     i      - index variable. */
 int	ft_printf(char const *format, ...)
 {
-	static int	pbytes = 0;
-	int			i;
+	int			pbytes;
 	int			cpos;
 	va_list		vl;
+	int			i;
 
 	i = 0;
+	pbytes = 0;
 	va_start(vl, format);
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
 		{
 			cpos = i + 1;
-			/* It means a single percent
-			 * symbol is located at the
-			 * end of the format string */
 			if (format[i + 1] == '\0')
 			{
 				pbytes = -1;
 				break;
 			}
 			if (next_sym_is_percent(format, &i))
+			{
+				pbytes++;
 				continue ;
+			}
 			else
 			{
 				while (!is_conv(format[i]) && format[i] != '\0')
 					i++;
 				if (is_conv(format[i]))
-				{
 					pbytes += process_conv(format, &vl, cpos);
-				}
-				else
-				{
-				}
 			}
 		}
 		else
