@@ -6,13 +6,14 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:20 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 16:30:46 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:43:53 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 #include <unistd.h>
+#include <stdlib.h>
 
 /* In a loop, we process all symbols in
  * the format string. If we find two
@@ -114,6 +115,7 @@ int	process_not_percent(char const *f, va_list *vl, void **pack)
 	pbytes = (int *)pack[0];
 	i = (int *)pack[1];
 	cpos = (int *)pack[2];
+	free(pack);
 	while (!is_conv(f[*i]) && f[*i] != '\0')
 		*i = *i + 1;
 	if (is_conv(f[*i]))
