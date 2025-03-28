@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/28 04:35:00 by dchernik          #+#    #+#             */
+/*   Updated: 2025/03/28 05:21:16 by dchernik         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
-#include "libft/libft.h"
 
 char	*reverse_str(char *str)
 {
@@ -45,3 +56,23 @@ char	*int_to_hex(unsigned long long num, int dcase)
 	}
 	return (reverse_str(str));
 }
+
+/* Determines if a symbol
+ * belongs to a conversion
+ * specifier symbols group */
+int	is_conv(char ch)
+{
+	char const	*convs;
+	int			i;
+
+	convs = "cspdiuxX\0";
+	i = 0;
+	while (convs[i] != '\0')
+	{
+		if (ch == convs[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+

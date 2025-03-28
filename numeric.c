@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   numeric.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchernik <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 15:29:25 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 04:15:31 by dchernik         ###   ########.fr       */
+/*   Created: 2025/03/28 04:35:07 by dchernik          #+#    #+#             */
+/*   Updated: 2025/03/28 04:37:34 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/libft.h"
 
 #include <unistd.h>
 #include <stdlib.h>

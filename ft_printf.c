@@ -1,8 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/28 04:35:20 by dchernik          #+#    #+#             */
+/*   Updated: 2025/03/28 05:34:49 by dchernik         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
-#include "libft/libft.h"
 
 #include <unistd.h>
-#include <stdio.h>
 
 /* In a loop, we process all symbols in
  * the format string. If we find two
@@ -20,42 +30,29 @@
  *
  *     pbytes - number of bytes that were
  *              output by printf;
- *     spos   - starting position of a found
  *     cpos   - position of a found
  *			    conversion field;
  *     i      - index variable. */
 int	ft_printf(char const *format, ...)
 {
 	int			pbytes;
-	int			cpos;
+	int			res;
 	va_list		vl;
 	int			i;
 
 	i = 0;
+	res = 2;
 	pbytes = 0;
 	va_start(vl, format);
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
 		{
-			cpos = i + 1;
-			if (format[i + 1] == '\0')
-			{
-				pbytes = -1;
-				break;
-			}
-			if (next_sym_is_percent(format, &i))
-			{
-				pbytes++;
+			res = process_percent(format, &vl, &pbytes, &i);
+			if (res == 0)
+				break ;
+			else if (res == 1)
 				continue ;
-			}
-			else
-			{
-				while (!is_conv(format[i]) && format[i] != '\0')
-					i++;
-				if (is_conv(format[i]))
-					pbytes += process_conv(format, &vl, cpos);
-			}
 		}
 		else
 		{
@@ -68,19 +65,29 @@ int	ft_printf(char const *format, ...)
 	return (pbytes);
 }
 
-/* Determines if the symbol after the i position is
- * a percent symbol. If so, it prints '%' and skips
- * the i + 1 position. Returns 1 if the next symbol
- * after '%' is percent and 0 if not */
-int	next_sym_is_percent(char const *format, int *i)
+int	process_percent(char const *format, va_list *vl, int *pbytes, int *i)
 {
-	if (format[*i + 1] == '%')
+	int	cpos;
+
+	cpos = *i + 1;
+	if (format[*i + 1] == '\0')
 	{
-		ft_putchar_fd('%', STDOUT);
-		*i += 2;
+		*pbytes = -1;
+		return (0);
+	}
+	if (next_sym_is_percent(format, i))
+	{
+		*pbytes = *pbytes + 1;
 		return (1);
 	}
-	return (0);
+	else
+	{
+		while (!is_conv(format[*i]) && format[*i] != '\0')
+			*i = *i + 1;
+		if (is_conv(format[*i]))
+			*pbytes = *pbytes + process_conv(format, vl, cpos);
+	}
+	return (2);
 }
 
 /* For each conversion calls the appropriate function
@@ -116,63 +123,18 @@ int	process_conv(char const *format, va_list *vl, int cpos)
 	return (pbytes);
 }
 
-/* Just to know how many items will
- * contain our array of pointers to
- * all conversions found in the
- * format string. */
-int	count_convs(char const *format)
+/* Determines if the symbol after the i position is
+ * a percent symbol. If so, it prints '%' and skips
+ * the i + 1 position. Returns 1 if the next symbol
+ * after '%' is percent and 0 if not */
+int	next_sym_is_percent(char const *format, int *i)
 {
-	int	cnv_num;
-	int	i;
-
-	i = 0;
-	cnv_num = 0;
-	while (format[i] != '\0')
+	if (format[*i + 1] == '%')
 	{
-		if (format[i] == '%' && format[i + 1] != '\0')
-		{
-			if (format[i + 1] == '%')
-				i++;
-			else
-				cnv_num++;
-		}
-		i++;
-	}
-	return (cnv_num);
-}
-
-/* Determines if a symbol
- * belongs to a conversion
- * specifier symbols group */
-int	is_conv(char ch)
-{
-	char const	*convs;
-	int			i;
-
-	convs = "cspdiuxX\0";
-	i = 0;
-	while (convs[i] != '\0')
-	{
-		if (ch == convs[i])
-			return (1);
-		i++;
+		ft_putchar_fd('%', STDOUT);
+		*i += 2;
+		return (1);
 	}
 	return (0);
 }
 
-/* Original printf from Glibc returns -1 only when the percent sign was
- * located at the end of the format string. In this case printf works as
- * it should, outputting everything that was passed to it except for the
- * last single character `%`, which is located at the end of the format
- * string.
- *
- * For instance, in this case:
- * n = printf("%");
- * n will be equal -1, and printf will not output anything
- *
- * ######################################################################
- *
- * When single `%` is located in the middle of the format string (and there
- * is no `%` at the end), printf will try to find corresponding convertion
- * symbol for that `%`, if fails, it will output `%` as it it with all
- * subsequent symbols */
