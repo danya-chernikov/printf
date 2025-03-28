@@ -6,17 +6,17 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:25 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 04:55:49 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:07:00 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_printf.h"
 
 #include <stddef.h>
 #include <stdlib.h>
 
 static char	*itoa_alloc(int size);
 static void	itoa_sign_check(char *buf, int n, int *i);
-static char	*itoa_reverse(char *str, int slen);
-static int	count_digits(int n);
 
 char	*ft_itoa(int n)
 {
@@ -44,23 +44,9 @@ char	*ft_itoa(int n)
 	}
 	itoa_sign_check(buf, n, &i);
 	buf[i] = '\0';
-	return (itoa_reverse(buf, i));
+	return (reverse_str(buf));
 }
 
-static int	count_digits(int n)
-{
-	int	num;
-
-	num = 0;
-	if (n == 0)
-		return (1);
-	while (n != 0)
-	{
-		n = n / 10;
-		num++;
-	}
-	return (num);
-}
 
 static char	*itoa_alloc(int size)
 {
@@ -84,20 +70,4 @@ static void	itoa_sign_check(char *buf, int n, int *i)
 		buf[*i] = '-';
 		(*i)++;
 	}
-}
-
-static char	*itoa_reverse(char *str, int slen)
-{
-	int	q;
-	int	tmp;
-
-	q = 0;
-	while (q < slen / 2)
-	{
-		tmp = str[q];
-		str[q] = str[slen - q - 1];
-		str[slen - q - 1] = tmp;
-		q++;
-	}
-	return (str);
 }

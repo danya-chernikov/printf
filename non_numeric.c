@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:03 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 11:49:21 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:27:13 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,16 @@ int	char_conv(va_list *vl)
 	null = '\0';
 	char_arg = va_arg(*vl, int);
 	if (char_arg == 0)
-		write(STDOUT, &null, len);
+	{
+		if (write(STDOUT, &null, len) == -1)
+			return (-1);
+	}
 	else
-		write(STDOUT, &char_arg, len);
+	{
+		if (write(STDOUT, &char_arg, len) == -1)
+			return (-1);
+		
+	}
 	return (len);
 }
 
@@ -42,13 +49,15 @@ int	string_conv(va_list *vl)
 	str_arg = va_arg(*vl, char *);
 	if (str_arg == NULL)
 	{
-		ft_putstr_fd("(null)", STDOUT);
 		len = 6;
+		if (ft_putstr_fd("(null)", STDOUT) == -1)
+			return (-1);
 	}
 	else
 	{
 		len = ft_strlen(str_arg);
-		ft_putstr_fd(str_arg, STDOUT);
+		if (ft_putstr_fd(str_arg, STDOUT) == -1)
+			return (-1);
 	}
 	return (len);
 }
@@ -63,15 +72,18 @@ int	ptr_conv(va_list *vl)
 	uint_arg = va_arg(*vl, unsigned long long);
 	if (uint_arg == 0)
 	{
-		ft_putstr_fd("(nil)", STDOUT);
 		len = 5;
+		if (ft_putstr_fd("(nil)", STDOUT) == -1)
+			return (-1);
 	}
 	else
 	{
 		hexnum = int_to_hex(uint_arg, LOWERCASE);
 		len = ft_strlen(hexnum) + 2;
-		write(STDOUT, "0x", (size_t)2);
-		ft_putstr_fd(hexnum, STDOUT);
+		if (write(STDOUT, "0x", (size_t)2) == -1)
+			return (-1);
+		if (ft_putstr_fd(hexnum, STDOUT) == -1)
+			return (-1);
 		free(hexnum);
 	}
 	return (len);

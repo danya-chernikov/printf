@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:20 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 12:04:55 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:33:40 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,20 @@
 int	ft_printf(char const *format, ...)
 {
 	int			pbytes;
+	int			res;
 	va_list		vl;
 
 	pbytes = 0;
 	va_start(vl, format);
-	parse_format_str(format, &vl, &pbytes);
+	res = parse_format_str(format, &vl, &pbytes);
+	if (res == -1)
+		return (-1);
 	va_end(vl);
 	return (pbytes);
 }
 
-void	parse_format_str(char const *format, va_list *vl, int *pbytes)
+/* Returns 0 on success */
+int	parse_format_str(char const *format, va_list *vl, int *pbytes)
 {
 	int	res;
 	int	i;
@@ -60,19 +64,23 @@ void	parse_format_str(char const *format, va_list *vl, int *pbytes)
 				break ;
 			else if (res == 1)
 				continue ;
+			else if (res == -1)
+				return (-1);	
 		}
 		else
 		{
-			ft_putchar_fd(format[i], STDOUT);
+			write(STDOUT, &format[i], (size_t)1);
 			(*pbytes)++;
 		}
 		i++;
 	}
+	return (0);
 }
 
 int	process_percent(char const *format, va_list *vl, int *pbytes, int *i)
 {
 	int	cpos;
+	int	res;
 
 	cpos = *i + 1;
 	if (format[*i + 1] == '\0')
@@ -90,23 +98,18 @@ int	process_percent(char const *format, va_list *vl, int *pbytes, int *i)
 		while (!is_conv(format[*i]) && format[*i] != '\0')
 			*i = *i + 1;
 		if (is_conv(format[*i]))
-			*pbytes = *pbytes + process_conv(format, vl, cpos);
+		{
+			res = process_conv(format, vl, cpos);
+			if (res == -1)
+				return (-1);
+			*pbytes = *pbytes + res;
+		}
 	}
 	return (2);
 }
 
 /* For each conversion calls the appropriate function
- * to handle it.
- *
- *     spos     - starting position of a found conversion
- *                field;
- *     epos     - ending position;
- *     args_cnt - the counter of the arguments that were
- *				  passed to ft_printf. we increment it
- *				  each time we find next '%'.
- *
- * In the string "just a number %-10.4d" spos is equal
- * to 15 and epos is equal to 19. */
+ * to handle it */
 int	process_conv(char const *format, va_list *vl, int cpos)
 {
 	int	pbytes;
@@ -134,9 +137,12 @@ int	process_conv(char const *format, va_list *vl, int cpos)
  * after '%' is percent and 0 if not */
 int	next_sym_is_percent(char const *format, int *i)
 {
+	char	percent;
+
+	percent = '%';
 	if (format[*i + 1] == '%')
 	{
-		ft_putchar_fd('%', STDOUT);
+		write(STDOUT, &percent, (size_t)1);
 		*i += 2;
 		return (1);
 	}

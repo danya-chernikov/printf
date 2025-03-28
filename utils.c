@@ -6,29 +6,13 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:00 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 11:47:51 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:15:06 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*reverse_str(char *str)
-{
-	size_t	i;
-	size_t	slen;
-	char	tmp;
-
-	i = 0;
-	slen = ft_strlen(str);
-	while (i < slen >> 1)
-	{
-		tmp = str[i];
-		str[i] = str[slen - i - 1];
-		str[slen - i - 1] = tmp;
-		i++;
-	}
-	return (str);
-}
+#include <unistd.h>
 
 char	*int_to_hex(unsigned long long num, int dcase)
 {
@@ -55,6 +39,39 @@ char	*int_to_hex(unsigned long long num, int dcase)
 		i++;
 	}
 	return (reverse_str(str));
+}
+
+char	*reverse_str(char *str)
+{
+	size_t	i;
+	size_t	slen;
+	char	tmp;
+
+	i = 0;
+	slen = ft_strlen(str);
+	while (i < slen >> 1)
+	{
+		tmp = str[i];
+		str[i] = str[slen - i - 1];
+		str[slen - i - 1] = tmp;
+		i++;
+	}
+	return (str);
+}
+
+int	count_digits(int n)
+{
+	int	num;
+
+	num = 0;
+	if (n == 0)
+		return (1);
+	while (n != 0)
+	{
+		n = n / 10;
+		num++;
+	}
+	return (num);
 }
 
 /* Determines if a symbol
