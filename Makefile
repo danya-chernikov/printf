@@ -2,9 +2,9 @@ CC=cc
 NAME=libftprintf.a
 CFLAGS=-Wall -Werror -Wextra -g3 -O0
 
-SRCS=ft_printf.c numeric.c non_numeric.c utils.c ft_utils.c ft_itoa.c
+SRCS=ft_printf.c numeric.c non_numeric.c utils.c packer.c ft_utils.c ft_itoa.c
 
-OBJS=ft_printf.o numeric.o non_numeric.o utils.o ft_utils.o ft_itoa.o
+OBJS=ft_printf.o numeric.o non_numeric.o utils.o packer.o ft_utils.o ft_itoa.o
 
 $(NAME) : $(OBJS)
 	ar rcs $(NAME) $(OBJS)

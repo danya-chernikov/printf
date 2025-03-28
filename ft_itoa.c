@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:25 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 14:07:00 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:07:30 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	*ft_itoa(int n)
 	buf[i] = '\0';
 	return (reverse_str(buf));
 }
-
 
 static char	*itoa_alloc(int size)
 {

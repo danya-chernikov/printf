@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:20 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 15:33:40 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:30:46 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,12 @@ int	parse_format_str(char const *format, va_list *vl, int *pbytes)
 			else if (res == 1)
 				continue ;
 			else if (res == -1)
-				return (-1);	
+				return (-1);
 		}
 		else
 		{
-			write(STDOUT, &format[i], (size_t)1);
+			if (write(STDOUT, &format[i], (size_t)1) == -1)
+				return (-1);
 			(*pbytes)++;
 		}
 		i++;
@@ -80,7 +81,6 @@ int	parse_format_str(char const *format, va_list *vl, int *pbytes)
 int	process_percent(char const *format, va_list *vl, int *pbytes, int *i)
 {
 	int	cpos;
-	int	res;
 
 	cpos = *i + 1;
 	if (format[*i + 1] == '\0')
@@ -95,17 +95,35 @@ int	process_percent(char const *format, va_list *vl, int *pbytes, int *i)
 	}
 	else
 	{
-		while (!is_conv(format[*i]) && format[*i] != '\0')
-			*i = *i + 1;
-		if (is_conv(format[*i]))
-		{
-			res = process_conv(format, vl, cpos);
-			if (res == -1)
-				return (-1);
-			*pbytes = *pbytes + res;
-		}
+		if (process_not_percent(format, vl,
+				pack_args(3, (void *)pbytes, (void *)i, (void *)&cpos)) == -1)
+			return (-1);
 	}
 	return (2);
+}
+
+/* Returns 0 on success */
+int	process_not_percent(char const *f, va_list *vl, void **pack)
+{
+	int	*pbytes;
+	int	*cpos;
+	int	*i;
+	int	res;
+
+	res = 0;
+	pbytes = (int *)pack[0];
+	i = (int *)pack[1];
+	cpos = (int *)pack[2];
+	while (!is_conv(f[*i]) && f[*i] != '\0')
+		*i = *i + 1;
+	if (is_conv(f[*i]))
+	{
+		res = process_conv(f, vl, *cpos);
+		if (res == -1)
+			return (-1);
+		*pbytes = *pbytes + res;
+	}
+	return (0);
 }
 
 /* For each conversion calls the appropriate function
@@ -129,22 +147,4 @@ int	process_conv(char const *format, va_list *vl, int cpos)
 	if (format[cpos] == 'X')
 		pbytes = hex_conv(vl, UPPERCASE);
 	return (pbytes);
-}
-
-/* Determines if the symbol after the i position is
- * a percent symbol. If so, it prints '%' and skips
- * the i + 1 position. Returns 1 if the next symbol
- * after '%' is percent and 0 if not */
-int	next_sym_is_percent(char const *format, int *i)
-{
-	char	percent;
-
-	percent = '%';
-	if (format[*i + 1] == '%')
-	{
-		write(STDOUT, &percent, (size_t)1);
-		*i += 2;
-		return (1);
-	}
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:03 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 15:27:13 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:07:43 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	char_conv(va_list *vl)
 	{
 		if (write(STDOUT, &char_arg, len) == -1)
 			return (-1);
-		
 	}
 	return (len);
 }

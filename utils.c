@@ -6,13 +6,32 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:00 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 15:15:06 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:01:57 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 #include <unistd.h>
+
+/* Determines if the symbol after the i position is
+ * a percent symbol. If so, it prints '%' and skips
+ * the i + 1 position. Returns 1 if the next symbol
+ * after '%' is percent and 0 if not */
+int	next_sym_is_percent(char const *format, int *i)
+{
+	char	percent;
+
+	percent = '%';
+	if (format[*i + 1] == '%')
+	{
+		if (write(STDOUT, &percent, (size_t)1) == -1)
+			return (-1);
+		*i += 2;
+		return (1);
+	}
+	return (0);
+}
 
 char	*int_to_hex(unsigned long long num, int dcase)
 {

@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:34:51 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 15:33:40 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:29:34 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 int		ft_printf(char const *format, ...);
 int		parse_format_str(char const *format, va_list *vl, int *pbytes);
 int		process_percent(char const *format, va_list *vl, int *pbytes, int *i);
+int		process_not_percent(char const *f, va_list *vl, void **pack);
 int		process_conv(char const *format, va_list *vl, int cpos);
-int		next_sym_is_percent(char const *format, int *i);
 
 /* non_numeric.c */
 int		char_conv(va_list *vl);
@@ -38,10 +38,14 @@ int		u_nbr_conv(va_list *vl);
 int		hex_conv(va_list *vl, int dcase);
 
 /* utils.c */
+int		next_sym_is_percent(char const *format, int *i);
 char	*int_to_hex(unsigned long long num, int dcase);
 char	*reverse_str(char *str);
 int		is_conv(char ch);
 int		count_digits(int n);
+
+/* packer.c */
+void	**pack_args(int nargs, ...);
 
 /* ft_utils.c */
 void	ft_bzero(void *s, size_t n);
