@@ -1,6 +1,6 @@
 CC=cc
 NAME=libftprintf.a
-CFLAGS=-Wall -Werror -Wextra -g3 -O0
+CFLAGS=-Wall -Werror -Wextra
 
 SRCS=ft_printf.c numeric.c non_numeric.c utils.c packer.c ft_utils.c ft_itoa.c
 
