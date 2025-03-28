@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:00 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 16:01:57 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:12:43 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	next_sym_is_percent(char const *format, int *i)
 	percent = '%';
 	if (format[*i + 1] == '%')
 	{
-		if (write(STDOUT, &percent, (size_t)1) == -1)
+		if (write(1, &percent, (size_t)1) == -1)
 			return (-1);
 		*i += 2;
 		return (1);
@@ -50,9 +50,9 @@ char	*int_to_hex(unsigned long long num, int dcase)
 	i = 0;
 	while (num != 0)
 	{
-		if (dcase == LOWERCASE)
+		if (dcase == 1)
 			str[i] = lower[num % 16];
-		else if (dcase == UPPERCASE)
+		else if (dcase == 2)
 			str[i] = upper[num % 16];
 		num /= 16;
 		i++;

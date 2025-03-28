@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:07 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 15:23:23 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:37:03 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,16 @@ int	nbr_conv(va_list *vl)
 	if (int_arg == 0)
 	{
 		len = 1;
-		if (write(STDOUT, &null, (size_t)1) == -1)
+		if (write(1, &null, (size_t)1) == -1)
 			return (-1);
 	}
 	else
 	{
 		num_str = ft_itoa(int_arg);
+		if (num_str == NULL)
+			return (-1);
 		len = ft_strlen(num_str);
-		if (write(STDOUT, num_str, len) == -1)
+		if (write(1, num_str, len) == -1)
 			return (-1);
 		free(num_str);
 	}
@@ -55,14 +57,16 @@ int	u_nbr_conv(va_list *vl)
 	if (uint_arg == 0)
 	{
 		len = 1;
-		if (write(STDOUT, &null, (size_t)1) == -1)
+		if (write(1, &null, (size_t)1) == -1)
 			return (-1);
 	}
 	else
 	{
 		num_str = ft_itoa_pos(uint_arg);
+		if (num_str == NULL)
+			return (-1);
 		len = ft_strlen(num_str);
-		if (write(STDOUT, num_str, len) == -1)
+		if (write(1, num_str, len) == -1)
 			return (-1);
 		free(num_str);
 	}
@@ -72,7 +76,6 @@ int	u_nbr_conv(va_list *vl)
 /* Processes %x and %X conversions */
 int	hex_conv(va_list *vl, int dcase)
 {
-	char				*hexnum_str;
 	unsigned int		hex_arg;
 	int					len;
 	char				null;
@@ -82,19 +85,31 @@ int	hex_conv(va_list *vl, int dcase)
 	if (hex_arg == 0)
 	{
 		len = 1;
-		if (write(STDOUT, &null, (size_t)1) == -1)
+		if (write(1, &null, (size_t)1) == -1)
 			return (-1);
 	}
 	else
 	{
-		if (dcase == UPPERCASE)
-			hexnum_str = int_to_hex(hex_arg, UPPERCASE);
-		else
-			hexnum_str = int_to_hex(hex_arg, LOWERCASE);
-		len = ft_strlen(hexnum_str);
-		if (ft_putstr_fd(hexnum_str, STDOUT) == -1)
+		if (hex_not_zero(hex_arg, dcase, &len) == -1)
 			return (-1);
-		free(hexnum_str);
 	}
 	return (len);
+}
+
+/* Returns 0 on success */
+int	hex_not_zero(unsigned int hex_arg, int dcase, int *len)
+{
+	char	*hexnum_str;
+
+	if (dcase == 1)
+		hexnum_str = int_to_hex(hex_arg, 1);
+	else
+		hexnum_str = int_to_hex(hex_arg, 2);
+	if (hexnum_str == NULL)
+		return (-1);
+	*len = ft_strlen(hexnum_str);
+	if (ft_putstr_fd(hexnum_str, 1) == -1)
+		return (-1);
+	free(hexnum_str);
+	return (0);
 }

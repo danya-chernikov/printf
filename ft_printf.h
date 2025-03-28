@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:34:51 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 16:29:34 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:36:27 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 
 # include <stdarg.h>
 # include <stddef.h>
-
-# define STDOUT 1
-# define LOWERCASE 1
-# define UPPERCASE 2
 
 /* ft_printf.c */
 int		ft_printf(char const *format, ...);
@@ -36,6 +32,7 @@ int		ptr_conv(va_list *vl);
 int		nbr_conv(va_list *vl);
 int		u_nbr_conv(va_list *vl);
 int		hex_conv(va_list *vl, int dcase);
+int		hex_not_zero(unsigned int hex_arg, int dcase, int *len);
 
 /* utils.c */
 int		next_sym_is_percent(char const *format, int *i);

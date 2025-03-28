@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:20 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 16:55:29 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:44:45 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	parse_format_str(char const *format, va_list *vl, int *pbytes)
 		}
 		else
 		{
-			if (write(STDOUT, &format[i], (size_t)1) == -1)
+			if (write(1, &format[i], (size_t)1) == -1)
 				return (-1);
 			(*pbytes)++;
 		}
@@ -81,7 +81,8 @@ int	parse_format_str(char const *format, va_list *vl, int *pbytes)
 
 int	process_percent(char const *format, va_list *vl, int *pbytes, int *i)
 {
-	int	cpos;
+	void	**pack;
+	int		cpos;
 
 	cpos = *i + 1;
 	if (format[*i + 1] == '\0')
@@ -96,8 +97,10 @@ int	process_percent(char const *format, va_list *vl, int *pbytes, int *i)
 	}
 	else
 	{
-		if (process_not_percent(format, vl,
-				pack_args(3, (void *)pbytes, (void *)i, (void *)&cpos)) == -1)
+		pack = pack_args(3, (void *)pbytes, (void *)i, (void *)&cpos);
+		if (pack == NULL)
+			return (-1);
+		if (process_not_percent(format, vl, pack) == -1)
 			return (-1);
 	}
 	return (2);
@@ -145,8 +148,8 @@ int	process_conv(char const *format, va_list *vl, int cpos)
 	if (format[cpos] == 'u')
 		pbytes = u_nbr_conv(vl);
 	if (format[cpos] == 'x')
-		pbytes = hex_conv(vl, LOWERCASE);
+		pbytes = hex_conv(vl, 1);
 	if (format[cpos] == 'X')
-		pbytes = hex_conv(vl, UPPERCASE);
+		pbytes = hex_conv(vl, 2);
 	return (pbytes);
 }

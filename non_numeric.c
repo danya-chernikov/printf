@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:03 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 16:07:43 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:25:14 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ int	char_conv(va_list *vl)
 	char_arg = va_arg(*vl, int);
 	if (char_arg == 0)
 	{
-		if (write(STDOUT, &null, len) == -1)
+		if (write(1, &null, len) == -1)
 			return (-1);
 	}
 	else
 	{
-		if (write(STDOUT, &char_arg, len) == -1)
+		if (write(1, &char_arg, len) == -1)
 			return (-1);
 	}
 	return (len);
@@ -49,13 +49,13 @@ int	string_conv(va_list *vl)
 	if (str_arg == NULL)
 	{
 		len = 6;
-		if (ft_putstr_fd("(null)", STDOUT) == -1)
+		if (ft_putstr_fd("(null)", 1) == -1)
 			return (-1);
 	}
 	else
 	{
 		len = ft_strlen(str_arg);
-		if (ft_putstr_fd(str_arg, STDOUT) == -1)
+		if (ft_putstr_fd(str_arg, 1) == -1)
 			return (-1);
 	}
 	return (len);
@@ -72,16 +72,18 @@ int	ptr_conv(va_list *vl)
 	if (uint_arg == 0)
 	{
 		len = 5;
-		if (ft_putstr_fd("(nil)", STDOUT) == -1)
+		if (ft_putstr_fd("(nil)", 1) == -1)
 			return (-1);
 	}
 	else
 	{
-		hexnum = int_to_hex(uint_arg, LOWERCASE);
-		len = ft_strlen(hexnum) + 2;
-		if (write(STDOUT, "0x", (size_t)2) == -1)
+		hexnum = int_to_hex(uint_arg, 1);
+		if (hexnum == NULL)
 			return (-1);
-		if (ft_putstr_fd(hexnum, STDOUT) == -1)
+		len = ft_strlen(hexnum) + 2;
+		if (write(1, "0x", (size_t)2) == -1)
+			return (-1);
+		if (ft_putstr_fd(hexnum, 1) == -1)
 			return (-1);
 		free(hexnum);
 	}
