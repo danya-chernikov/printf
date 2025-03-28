@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:00 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 05:21:16 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 11:47:51 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*reverse_str(char *str)
 	slen = ft_strlen(str);
 	while (i < slen >> 1)
 	{
-	    tmp = str[i];
+		tmp = str[i];
 		str[i] = str[slen - i - 1];
 		str[slen - i - 1] = tmp;
 		i++;
@@ -75,4 +75,3 @@ int	is_conv(char ch)
 	}
 	return (0);
 }
-

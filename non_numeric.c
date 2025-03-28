@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:03 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 04:37:34 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 11:49:21 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	char_conv(va_list *vl)
 	null = '\0';
 	char_arg = va_arg(*vl, int);
 	if (char_arg == 0)
-		write(STDOUT, &null, len); // check this!
+		write(STDOUT, &null, len);
 	else
 		write(STDOUT, &char_arg, len);
 	return (len);
@@ -59,7 +59,7 @@ int	ptr_conv(va_list *vl)
 	char				*hexnum;
 	unsigned long long	uint_arg;
 	int					len;
-	
+
 	uint_arg = va_arg(*vl, unsigned long long);
 	if (uint_arg == 0)
 	{

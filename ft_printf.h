@@ -6,15 +6,15 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:34:51 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 05:14:39 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:06:40 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include <stdarg.h>
-#include <stddef.h>
+# include <stdarg.h>
+# include <stddef.h>
 
 # define STDOUT 1
 # define LOWERCASE 1
@@ -22,6 +22,7 @@
 
 /* ft_printf.c */
 int		ft_printf(char const *format, ...);
+void	parse_format_str(char const *format, va_list *vl, int *pbytes);
 int		process_percent(char const *format, va_list *vl, int *pbytes, int *i);
 int		process_conv(char const *format, va_list *vl, int cpos);
 int		next_sym_is_percent(char const *format, int *i);

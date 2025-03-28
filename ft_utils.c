@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:54:19 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 05:21:16 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 11:49:07 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (NULL);
 	ft_bzero(ptr, tsize);
 	return (ptr);
-} 
+}
 
 void	ft_putchar_fd(char c, int fd)
 {

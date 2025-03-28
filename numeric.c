@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:07 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 04:37:34 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 11:49:37 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	u_nbr_conv(va_list *vl)
 int	hex_conv(va_list *vl, int dcase)
 {
 	char				*hexnum_str;
-	unsigned long long	hex_arg; 
+	unsigned long long	hex_arg;
 	int					len;
 
 	hex_arg = va_arg(*vl, unsigned long long);

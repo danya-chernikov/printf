@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:20 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 05:34:49 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:04:55 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,26 @@
 int	ft_printf(char const *format, ...)
 {
 	int			pbytes;
-	int			res;
 	va_list		vl;
-	int			i;
 
-	i = 0;
-	res = 2;
 	pbytes = 0;
 	va_start(vl, format);
+	parse_format_str(format, &vl, &pbytes);
+	va_end(vl);
+	return (pbytes);
+}
+
+void	parse_format_str(char const *format, va_list *vl, int *pbytes)
+{
+	int	res;
+	int	i;
+
+	i = 0;
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
 		{
-			res = process_percent(format, &vl, &pbytes, &i);
+			res = process_percent(format, vl, pbytes, &i);
 			if (res == 0)
 				break ;
 			else if (res == 1)
@@ -57,12 +64,10 @@ int	ft_printf(char const *format, ...)
 		else
 		{
 			ft_putchar_fd(format[i], STDOUT);
-			pbytes++;
+			(*pbytes)++;
 		}
 		i++;
 	}
-	va_end(vl);
-	return (pbytes);
 }
 
 int	process_percent(char const *format, va_list *vl, int *pbytes, int *i)
@@ -137,4 +142,3 @@ int	next_sym_is_percent(char const *format, int *i)
 	}
 	return (0);
 }
-
