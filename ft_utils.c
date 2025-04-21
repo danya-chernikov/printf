@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:54:19 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 15:22:08 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/04/21 13:40:03 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,26 @@ size_t	ft_strlen(const char *str)
 
 char	*ft_itoa_pos(unsigned int n)
 {
-	int				i;
-	unsigned int	num;
-	char			*buf;
+	int		i;
+	char	*buf;
 
+	if (n == 0)
+	{
+		buf = (char *)malloc(2 * sizeof(char));
+		if (buf == NULL)
+			return (NULL);
+		buf[0] = '0';
+		buf[1] = '\0';
+		return (buf);
+	}
 	i = 0;
-	num = n;
 	buf = (char *)malloc((count_digits(n) + 1) * sizeof(char));
 	if (buf == NULL)
 		return (NULL);
-	while (num != 0)
+	while (n != 0)
 	{
-		buf[i] = (num % 10) + '0';
-		num /= 10;
+		buf[i] = (n % 10) + '0';
+		n /= 10;
 		i++;
 	}
 	buf[i] = '\0';

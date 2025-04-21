@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:34:51 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 17:36:27 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/04/21 13:16:23 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		next_sym_is_percent(char const *format, int *i);
 char	*int_to_hex(unsigned long long num, int dcase);
 char	*reverse_str(char *str);
 int		is_conv(char ch);
-int		count_digits(int n);
+int		count_digits(long long n);
 
 /* packer.c */
 void	**pack_args(int nargs, ...);

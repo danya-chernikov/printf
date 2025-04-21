@@ -6,7 +6,7 @@
 /*   By: dchernik <dchernik@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 04:35:00 by dchernik          #+#    #+#             */
-/*   Updated: 2025/03/28 17:12:43 by dchernik         ###   ########.fr       */
+/*   Updated: 2025/04/21 13:29:04 by dchernik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,13 @@ char	*reverse_str(char *str)
 	return (str);
 }
 
-int	count_digits(int n)
+int	count_digits(long long n)
 {
 	int	num;
 
 	num = 0;
+	if (n < 0)
+		n = -n;
 	if (n == 0)
 		return (1);
 	while (n != 0)
